@@ -1,25 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import { useCallback, useState } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import useSocket from "./hooks/useSocket";
+import ChartBar from "./components/Chart";
+
+const App = () => {
+    const [dataset, setData] = useState([
+        { number: 100, time: new Date(Date.now() - 1000 * 30), color: '#cd95b0',label: "COIN" },
+        { number: 69, time: new Date(Date.now() - 1000 * 25), color: '#cd95b0' , label: "COIN" },
+        { number: 43, time: new Date(Date.now() - 1000 * 20), color: '#cd95b0', label: "COIN"  },
+        { number: 1, time: new Date(Date.now() - 1000 * 15), color: '#cd95b0', label: "COIN"  },
+        { number: 72, time: new Date(Date.now() - 1000 * 10), color: '#cd95b0', label: "COIN"  },
+        { number: 52, time: new Date(Date.now() - 1000 * 5), color: '#cd95b0', label: "COIN"  },
+        { number: 23, time: new Date(Date.now()), color: '#cd95b0', label: "COIN" },
+    ])
+
+    const handleNewNotification = useCallback(data => {
+        setData(data)
+    }, []);
+
+    useSocket(handleNewNotification);
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                <ChartBar dataset={dataset} />
+            </header>
+        </div>
+    );
 }
 
 export default App;
