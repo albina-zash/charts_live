@@ -15,9 +15,11 @@ const Chart = () => {
     useSocket(handleNewNotification);
 
     if(!dataset.length){
-        return <div>We receive data up to 5 seconds
-            <Loader />
-        </div>
+        return(
+            <div>
+                We receive data up to 5 seconds
+                <Loader />
+            </div>)
     }
 
     return(
